@@ -1,31 +1,43 @@
-<!DOCTYPE html>
-<!-- A placeholder from the Home Sales template. Replace this file with your site's first page. -->
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Under construction</title>
-  <!-- An empty icon, so the browser doesn't log an error looking for favicon.ico -->
-  <link rel="icon" href="data:,">
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      max-width: 40rem;
-      margin: 0 auto;
-      padding: 3rem 1rem;
-      font-family: system-ui, sans-serif;
-      line-height: 1.5;
-    }
-    footer { margin-top: 3rem; font-size: 0.875rem; opacity: 0.75; }
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Compare historical completed home sales across US college towns, using median prices, sale counts and time on market.">
+  <title>Campus Comps | College-town home sales</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
+  <a class="skip" href="#explore">Skip to data</a>
+  <header class="topbar"><a class="brand" href="./"><span aria-hidden="true">⌂</span> Campus Comps</a><nav aria-label="Main"><a href="#explore">Explore sales</a><a href="#method">Data &amp; method</a><a href="https://github.com/zhehaoqian0715-hub/campustown-home-sales">GitHub</a></nav></header>
   <main>
-    <h1>This site is under construction</h1>
-    <p>It will show findings from the College-town home sales dataset.</p>
+    <section class="hero">
+      <div class="eyebrow">COLLEGE-TOWN HOME SALES · MARCH 2026 DATA COLLECTION</div>
+      <h1>A campus nearby.<br>A different housing market.</h1>
+      <p>Compare what homes actually sold for across college towns. Start with median prices, then look at the sales and listing history behind each market.</p>
+      <div class="hero-footer"><a href="#explore" class="primary">Explore the cities</a><span>Completed sales · Historical records · US dollars</span></div>
+      <div class="hero-art" aria-hidden="true"><div class="roof"></div><div class="house"><div class="window"></div><div class="door"></div></div><div class="small-house"><div class="window"></div></div><div class="baseline"></div><div class="art-caption">HOME SALES / CAMPUS MARKETS</div></div>
+    </section>
+    <section id="explore" class="explore" aria-labelledby="explore-title">
+      <div class="section-top"><div><div class="eyebrow">MARKET COMPARISON</div><h2 id="explore-title">Find your point of comparison.</h2></div><label>State<select id="state"><option value="all">All states</option></select></label></div>
+      <p class="rule">Price rule applied throughout · $10,000–$5,000,000 inclusive. <a href="#method">See methodology</a></p>
+      <div class="metrics" id="metrics" aria-live="polite"><p>Loading sales data…</p></div>
+      <p class="scope" id="scope"></p>
+      <div class="comparison-grid">
+        <section class="chart-panel" aria-labelledby="chart-title">
+          <div class="panel-top"><div><h3 id="chart-title">Median sale price by city</h3><p>Choose a bar to inspect a city.</p></div><label>Sort by<select id="sort"><option value="price">Price, high to low</option><option value="sales">Most sales</option><option value="name">City, A to Z</option></select></label></div>
+          <div class="bar-head"><span>City / State</span><span>Median price</span></div>
+          <div id="bars" role="group" aria-label="City median sale prices"></div>
+          <p class="chart-note">Bar length encodes median sale price. Prices reflect the recorded sales in each city, across the full collection period.</p>
+        </section>
+        <aside class="city-panel" aria-labelledby="city-title" id="city-detail" aria-live="polite"></aside>
+      </div>
+      <section class="table-panel" aria-labelledby="table-title"><div class="panel-top"><div><h3 id="table-title">The numbers behind the chart</h3><p>Same price rule and state selection as the chart.</p></div><button id="download" class="secondary" disabled>Download city summary</button></div><div class="table-scroll"><table><thead><tr><th scope="col">City</th><th scope="col">State</th><th scope="col">Sales</th><th scope="col">Median price</th><th scope="col">Middle 50% of prices</th><th scope="col">Median days on market</th></tr></thead><tbody id="table-body"></tbody></table></div></section>
+    </section>
+    <section class="method" id="method" aria-labelledby="method-title"><div><div class="eyebrow">DATA &amp; METHOD</div><h2 id="method-title">Read the market.<br>Know the limits.</h2><a href="docs/data_description_sheet.md">Read the original data description</a></div><div class="method-copy"><h3>Sale prices and coverage</h3><p id="coverage-note">Summaries load from the original course dataset.</p><p>We exclude recorded prices below $10,000 or above $5,000,000 to limit implausible transfers and extreme values. The same retained records underpin every metric. We keep every unique listing ID, including repeated addresses that may identify different units or sales. The middle 50% is the interval from the 25th to the 75th percentile.</p><h3>Time on market and price per square foot</h3><p>Days on market runs from listing to contract. Only records with both dates and a nonnegative duration enter that median. Missing dates stay missing, and coverage is shown for each city. Price per square foot is the median of individual sale price ÷ living area, using only positive, reported living areas.</p><h3>What these comparisons describe</h3><p>These are historical completed sales collected in March 2026. City differences can reflect the mix of homes sold and the sale dates. Campus distance is straight-line distance. The source's property-type labels are unreliable, so they are not used to filter or compare homes. Lot size, bathrooms, assessed values and tax amounts are not used in these summaries. Values were reported by the collection source and were not verified against county records.</p><p class="citation">Source · College-town home sales dataset, version 1.0 (2026). University of Illinois-Deloitte Foundation Center for Business Emerging Technologies.</p><a href="data/college_town_home_sales.csv" download>Download original CSV</a></div></section>
   </main>
-  <footer>
-    <p>Data: College-town home sales dataset, version 1.0 (2026). University of Illinois-Deloitte Foundation Center for Business Emerging Technologies. Data collected March 2026.</p>
-  </footer>
+  <footer><span>Campus Comps</span><span>ACCY 593 / BDI 475 · Zhehao Qian</span><a href="AGENT_LOG.md">AI collaboration log</a></footer>
+  <noscript><p class="error">Enable JavaScript to view the interactive summaries. The original CSV and methodology remain available above.</p></noscript>
 </body>
 </html>
